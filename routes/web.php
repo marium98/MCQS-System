@@ -25,6 +25,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/insert',[App\Http\Controllers\QuestionController::class, 'insert'])->name('insert');
 Route::post('/create',[App\Http\Controllers\QuestionController::class, 'create'])->name('create');
 Route::resource('show','App\Http\Controllers\ExtraController');
+Route::get('getQuestion',[App\Http\Controllers\ExtraController::class, 'getQuestion'])->name('getQuestion');
+//Route::get('show',[App\Http\Controllers\ExtraController::class, 'index'])->name('show');
 Route::resource('test','App\Http\Controllers\TestController');
 //Route::view('final', 'final');
 Route::resource('final','App\Http\Controllers\ResultController');

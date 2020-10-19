@@ -38,28 +38,31 @@ class QuestionController extends Controller
                 $question->answer = $data['answer'];
                 $question->save();
                 $lastid = $question->id; 
-               
+
+
+         //Bulk Insertion//      
  $options = $request->option_text;
  $points = $request->points;
- $array1 = [];
+ $array = []; //initialize array
 
-foreach($options as $value)
-{
-    $blankarray=[];
-    $blankarray['question_id'] = $lastid;
-    $blankarray['option_text'] = $value;
-    if($question->answer == $value)
-    {
-        $blankarray['points'] = $points;
+ foreach($options as $value) //loop for option tables
+ {
+     $bulkarray = [];
+     $bulkarray['question_id'] = $lastid;
+     $bulkarray['option_text'] = $value;
+    
+     if($question->answer == $value) //conditions for correct answer
+     {  
+        $bulkarray['points'] = $points;
      }
-    else{
-        $blankarray['points'] = 0;
-    }
-    $array1[]  = $blankarray;
-}
-            
-        
-Option::insert($array1);
+     else{
+        $bulkarray['points'] = 0;   
+     }
+
+     $array[] =  $bulkarray ;
+ }   
+Option::insert($array);
+
     return redirect('insert')->with('status',"Question added successfully");
  }
 			

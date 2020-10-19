@@ -1,66 +1,53 @@
-@extends('layouts.app1')
 
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+   
+    <div class="col-md-11">
+        <table border="2" class="table table-hover" id="myTable">
+         <thead>
+         <tr>
+         <td>Id</td>
+         <td>Question</td>
+         <td>Correct Answer</td>
+         <td>Created At</td>
+         <td>Updated At</td>
+         <td>Edit</td>
+         <td>Delete</td>
+         </tr>
+         </thead>
+         </table>
+     </div>
+</body>
 
-@if (session('status'))
-<div class="alert alert-success" role="alert">
-	<button type="button" class="close" data-dismiss="alert">×</button>
-	{{ session('status') }}
-</div>
-@elseif(session('failed'))
-<div class="alert alert-danger" role="alert">
-	<button type="button" class="close" data-dismiss="alert">×</button>
-	{{ session('failed') }}
-</div>
-@endif
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('View Questions') }}</div>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" defer></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+   <script>
+    $(document).ready( function () {
+    $('#myTable').dataTable({
+        processing: true,
+        serverSide: true,
+        ajax: '{!! route('getQuestion') !!}',
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'question_text', name: 'question_text' },
+            { data: 'answer', name: 'answer' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'updated_at', name: 'updated_at' },
+        ]
+    });
+} );
 
-            </div>
-                   <br />
-                    <table border="2" class="table table-hover" >
-                        <thead>
-                        <tr>
-                        <td>Id</td>
-                        <td>Question</td>
-                        <td>Option 1</td>
-                        <td>Option 2</td>
-                        <td>Option 3</td>
-                        <td>Option 4</td>
-                        <td>Correct Answer</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
-                        </tr>
-                        </thead>
-                        @foreach ($questions as $question)
-                        <tr class="table-warning">
-                        <td>{{ $question->id }}</td>
-                        <td>{{ $question->question_text }}</td>
-                        @php
-                        $filtered = $options->where('question_id', $question->id);
-                            // print_r($filtered);exit;
-                        @endphp
-                            <?php foreach($filtered as $value) { ?>
-                                <td> <?= $value['option_text']; ?></td>
-                            <?php } ?>
-                            <td>{{ $question->answer }}</td>
-                        <td><a href="show/{{$question->id}}/edit" class="btn btn-primary">Edit</a></td>
-                       <td> <form action="show/{{$question->id}}" method="POST">
-                            @csrf
-                            @method("DELETE")
-                            <input type="submit" value="Delete" class="btn btn-danger"> </td> </form>
-                        </tr>
-                        @endforeach
-                        </table> 
-               
+</script>
+</html>
+    
             
-            <br /> <br />
-            <a href="{{ route('insert')}}" class="btn btn-danger">ADD QUESTIONS</a>
-            <a href="/" class="btn btn-primary">Back To Dashboard</a>
-        </div>
-    </div>
-</div>
-@endsection
+
+

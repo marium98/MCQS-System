@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Option;
+use Yajra\Datatables\Datatables;
 use DB;
 
 
@@ -18,10 +19,20 @@ class ExtraController extends Controller
     public function index()
     {
         
-        $questions = Question::with(['questionOptions'])->get();
-        $options = Option::all();
-        return view('show',compact('questions', 'options'));
+     /*   $questions = Question::with(['questionOptions'])->get();
+        $options = Option::all(); 
+        return view('show',compact('questions', 'options')); */
+
+        return view('show');
     }
+
+    public function getQuestion()
+    {
+        return Datatables::of(Question::query())->make(true);
+
+    }
+        
+    
 
     /**
      * Show the form for creating a new resource.
