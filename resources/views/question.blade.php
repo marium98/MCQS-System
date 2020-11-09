@@ -39,9 +39,9 @@
                   <br/><br />
                 <hr>
                 <div class="container">
-                 <input type="submit" class="btn btn-warning" value="Submit">
-                <a href="/" class="btn btn-primary">Back To Dashboard</a>
-                <a href="/show" class="btn btn-secondary">View Questions</a>
+                 <input type="submit" class="btn btn-warning btn-sm" value="Submit">
+                <a href="/admin" class="btn btn-primary btn-sm">Back To Dashboard</a>
+                <a href="/show" class="btn btn-secondary btn-sm">View Questions</a>
                 </div> 
               </div>
         </div>

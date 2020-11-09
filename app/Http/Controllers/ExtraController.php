@@ -16,22 +16,45 @@ class ExtraController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        
-     /*   $questions = Question::with(['questionOptions'])->get();
+        $questions = Question::with(['questionOptions'])->get();
         $options = Option::all(); 
-        return view('show',compact('questions', 'options')); */
+      
+        if($request->ajax())
+        {
+            $data = Question::latest()->get();
+            return DataTables::of($data)
+                    ->addColumn('action', function($data){
+                        $button = '<a href="show/{{$question->id}}/edit" class="btn btn-primary">Edit</a>';
+                        $button .= '&nbsp;&nbsp;&nbsp;<button type="button" name="edit" id="'.$data->id.'" class="delete btn btn-danger btn-sm">Delete</button>';
+                        return $button;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
+        }
+        return view('show',compact('questions', 'options'));
 
-        return view('show');
     }
 
-    public function getQuestion()
+    /* public function getQuestion()
     {
-        return Datatables::of(Question::query())->make(true);
+        return Datatables::of(Question::query())
+        ->addIndexColumn()
+        ->addColumn('action', function($row){
+            $btn = '<a href="show/{{$question->id}}/edit class="btn btn-primary">Edit</a>';
+            $btn .= '&nbsp;&nbsp;&nbsp;<form action="show/{{$question->id}}" method="POST">
+          
+            <input type="submit" value="Delete" class="btn btn-danger"> </td> </form>';
+            return $btn;
+        })
+        ->rawColumns(['action'])
+        ->make(true);
 
-    }
-        
+    } */
+   /*   */
+
+
     
 
     /**
@@ -106,14 +129,12 @@ class ExtraController extends Controller
         {
             $option = Option::where('question_id', $id)->first();
             $option->update('option_text', $value);
-        }  */
-        //solution dekhna paryga mein tw json say he karta
-       
-        // $options = DB::table('options')
+        }
+        $options = DB::table('options')
         // ->where('question_id' , $id)
         // ->update(
         //    $request->only([ 'option_text' ]));
-//dd($request->all());
+        //dd($request->all());  */
        return redirect('show')->with('status','Question has been updated');
     }
 

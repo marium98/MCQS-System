@@ -12,12 +12,18 @@
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
-                    @endif
-
-                    {{ __('Your test score is') }}
+                            @endif
+                            {{-- @foreach ($user as $user)
+                            {{$user->name}} ,  {{ __('Your test score is') }}
+                            @endforeach
+                            @foreach ($scores as $score)
+                                {{$score->total_points}}
+                            @endforeach --}}
+                            Hello,
+                            {{$users->name}} {{ __('your test score is') }} <br />
+                            {{$scores->total_points}}
                   </div>
-            
-            </div>
+            </div> <br />
             <a href="{{route('home')}}" class="btn btn-secondary">Back To Dashboard</a>
         </div>
     </div>

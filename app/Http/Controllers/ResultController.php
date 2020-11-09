@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Result;
+use App\Models\User;
+use App\Models\Question;
+use App\Models\Option;
+use Yajra\Datatables\Datatables;
+use DB;
 
 class ResultController extends Controller
 {
@@ -12,9 +17,23 @@ class ResultController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $users = User::with('userResults')->get();
+        $results = Result::all();
+        $scores = DB::table('options')->sum('points');
+      /*   $num1 = 50;
+        $num2 = 100;
+        $per = ($num1 / $num2) * 100;
+        dd($per); */
+        if($request->ajax())
+        {
+            $data = User::latest()->get();
+            return DataTables::of($users)
+                    ->make(true);
+        }
+        return view('result',compact('users', 'results','scores'));
+        
     }
 
     /**
@@ -46,11 +65,11 @@ class ResultController extends Controller
      */
     public function show($id)
     {
-       $result = Result::whereHas('user', function ($query) {
+      /*  $result = Result::whereHas('user', function ($query) {
             $query->whereId(auth()->id());
         })->findOrFail($id);
     
-         return view('final.show', compact('result')); 
+         return view('final.show', compact('result'));  */
 
         // return 'Hello';
     }

@@ -13,17 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     {{ __('You are logged in!') }}
-
-                   
                 </div>
-                @if(Session::has('message'))
-<p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
-@endif
-            </div>
-        <a href="{{route('test.index')}}" class="btn btn-primary">Start The Test</a>
-     {{--    <a href="{{route('final.show',app()->getLocale())}}" class="btn btn-secondary">View Score</a> --}}
+               
+                 <span class="alert-success">   {{ session('message') }} </span>
+            </div> <br />
+            <a href="/final" class="btn btn-primary btn-sm">Test Score</a>
+            <a href="/test" class="btn btn-secondary btn-sm">Start Test</a>
         </div>
     </div>
 </div>

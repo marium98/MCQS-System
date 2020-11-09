@@ -19,7 +19,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Questions') }}</div>
                 <div class="card-body">
-                <form action="{{route('test.store')}}"  method="POST">
+                <form action="test"  method="POST">
                  @csrf
                     @foreach ($questions as $question)
                     <div class="card-header">

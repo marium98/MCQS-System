@@ -63,9 +63,8 @@ class TestController extends Controller
         $user = User::find(Auth::user()->id);
         $user->test_taken = 1;
         $user->save();
-       
-        return view('final');
-    
+        return redirect()->route('final')->with('message', 'Check your score now');
+      
     }
 
     /**

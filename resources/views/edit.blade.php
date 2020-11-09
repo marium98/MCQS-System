@@ -29,7 +29,7 @@
                  <div class="container"> 
                      <label>Add Options</label><br />
                      @php
-                     $filtered = $options->where('question_id', $question->id);//oky?
+                     $filtered = $options->where('question_id', $question->id);
                      @endphp
                      <?php foreach($filtered as $value) { ?>
                         <input name="options[<?= $value['id'] ?>]" type="text" value="<?=$value['option_text'];?>" />
